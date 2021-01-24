@@ -53,7 +53,7 @@ function App() {
           ))}
         </div>
       </main>
-      <footer classNameName="row center">All rights reserved</footer>
+      <footer className="row center">All rights reserved</footer>
     </div>
   );
 }

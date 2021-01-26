@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Loading from "../components/Loading";
+import Message from "../components/Message";
 import Product from "../components/Product";
 
 export default function HomeScreen() {
@@ -26,7 +28,7 @@ export default function HomeScreen() {
       {loading ? (
         <Loading />
       ) : error ? (
-        <Message>{error}</Message>
+        <Message variant="danger">{error}</Message>
       ) : (
         <div className="row center">
           {products.map((product) => (

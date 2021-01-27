@@ -44,7 +44,7 @@ export default function SigninScreen() {
         <div>
           <label />
           <div>
-            New customer? <Link to="/register">Create your account</Link>
+            New customer? <Link to="/register">Register now.</Link>
           </div>
         </div>
       </form>

@@ -17,7 +17,6 @@ export const data = {
   ],
   products: [
     {
-      id: "1",
       name: "Nike Slim Shirt",
       category: "shirts",
       image: "/images/p1.jpg",
@@ -29,7 +28,6 @@ export const data = {
       description: "high quality product",
     },
     {
-      id: "2",
       name: "Adidas Slim Shirt",
       category: "shirts",
       image: "/images/p2.jpg",
@@ -41,7 +39,6 @@ export const data = {
       description: "high quality product",
     },
     {
-      id: "3",
       name: "Lacoste Free Shirt",
       category: "shirts",
       image: "/images/p3.jpg",
@@ -53,7 +50,6 @@ export const data = {
       description: "high quality product",
     },
     {
-      id: "4",
       name: "Nike Slim Pant",
       category: "pants",
       image: "/images/p4.jpg",
@@ -65,7 +61,6 @@ export const data = {
       description: "high quality product",
     },
     {
-      id: "5",
       name: "Puma Slim Pants",
       category: "pants",
       image: "/images/p5.jpg",
@@ -77,7 +72,6 @@ export const data = {
       description: "high quality product",
     },
     {
-      id: "6",
       name: "Adidas Fit Pants",
       category: "pants",
       image: "/images/p6.jpg",

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../actions/CartActions";
+import { addToCart, removeFromCart } from "../actions/cartActions";
 import Message from "../components/Message";
 
 export default function CartScreen(props) {
@@ -19,7 +19,9 @@ export default function CartScreen(props) {
     }
   }, [dispatch, productId, qty]);
 
-  const removeFromCartHandler = (id) => {};
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
+  };
 
   const checkoutHandler = () => {
     props.history.push("/signin?redirect=shipping");
@@ -31,7 +33,10 @@ export default function CartScreen(props) {
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
           <Message>
-            Cart is empty <Link to="/">Return to homepage</Link>
+            Your cart is empty.{" "}
+            <Link to="/" style={{ textDecoration: "underline" }}>
+              Click here to return home.
+            </Link>
           </Message>
         ) : (
           <ul>

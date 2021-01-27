@@ -3,7 +3,7 @@ import Loading from "../components/Loading";
 import Message from "../components/Message";
 import Rating from "../components/Rating";
 import { Link } from "react-router-dom";
-import { productDetails } from "../actions/ProductActions";
+import { productDetails } from "../actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ProductScreen(props) {

@@ -1,7 +1,10 @@
 import express from "express";
+import dotenv from "dotenv";
 import mongoose from "mongoose";
 import productRouter from "./routers/productRouter.js";
 import userRouter from "./routers/userRouter.js";
+
+dotenv.config();
 
 const app = express();
 mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazona", {

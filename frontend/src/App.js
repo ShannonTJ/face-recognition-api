@@ -12,6 +12,8 @@ function App() {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
+  const signOutHandler = () => {};
+
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -29,7 +31,17 @@ function App() {
               )}
             </Link>
             {userInfo ? (
-              <Link to="#">{userInfo.name}</Link>
+              <div className="dropdown">
+                <Link to="#">
+                  {userInfo.name}
+                  <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <Link to="#signout" onClick={signOutHandler}>
+                    Sign Out
+                  </Link>
+                </ul>
+              </div>
             ) : (
               <Link to="/signin">Sign In</Link>
             )}

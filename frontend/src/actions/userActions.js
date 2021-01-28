@@ -4,6 +4,9 @@ import {
   USER_SIGNIN_SUCCESS,
   USER_SIGNIN_FAIL,
   USER_SIGNOUT,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+  USER_REGISTER_FAIL,
 } from "../constants/userConstants";
 
 export const signin = (email, password) => async (dispatch) => {

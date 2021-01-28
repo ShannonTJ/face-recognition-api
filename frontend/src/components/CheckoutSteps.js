@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function CheckoutSteps(props) {
+  console.log(props.step1);
   return (
     <div className="row checkout-steps">
       <div className={props.stepOne ? "active" : ""}>Sign In</div>

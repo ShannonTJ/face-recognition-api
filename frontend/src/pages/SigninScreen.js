@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { signin } from "../actions/userActions";
+import Loading from "../components/Loading";
+import Message from "../components/Message";
 
 export default function SigninScreen(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
+  const { userInfo, loading, error } = userSignin;
 
   const redirect = props.location.search
     ? props.location.search.split("=")[1]
@@ -32,6 +34,8 @@ export default function SigninScreen(props) {
         <div>
           <h1>Sign In</h1>
         </div>
+        {loading && <Loading />}
+        {error && <Message variant="danger">{error}</Message>}
         <div>
           <label htmlFor="email">Email address</label>
           <input

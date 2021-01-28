@@ -9,6 +9,7 @@ export default function RegisterScreen(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const userRegister = useSelector((state) => state.userRegister);
   const { userInfo, loading, error } = userRegister;
@@ -20,7 +21,11 @@ export default function RegisterScreen(props) {
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(register(name, email, password));
+    if (password !== confirmPassword) {
+      alert("Your passwords do not match.");
+    } else {
+      dispatch(register(name, email, password));
+    }
   };
 
   useEffect(() => {
@@ -33,7 +38,7 @@ export default function RegisterScreen(props) {
     <div>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Register</h1>
+          <h1>Create Account</h1>
         </div>
         {loading && <Loading />}
         {error && <Message variant="danger">{error}</Message>}
@@ -68,6 +73,16 @@ export default function RegisterScreen(props) {
           />
         </div>
         <div>
+          <label htmlFor="confirmPassword">Confirm password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Re-enter password"
+            required
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <div>
           <label />
           <button className="primary" type="submit">
             Register
@@ -76,7 +91,8 @@ export default function RegisterScreen(props) {
         <div>
           <label />
           <div>
-            Already a user? <Link to="/register">Sign in.</Link>
+            Already a user?{" "}
+            <Link to={`/signin?redirect=${redirect}`}>Sign in.</Link>
           </div>
         </div>
       </form>

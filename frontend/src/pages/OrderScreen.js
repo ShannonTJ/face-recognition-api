@@ -17,9 +17,13 @@ export default function OrderScreen(props) {
     dispatch(detailsOrder(orderId));
   }, [orderId, dispatch]);
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : error ? (
+    <Message variant="danger">{error}</Message>
+  ) : (
     <div>
-      <CheckoutSteps stepOne stepTwo stepThree stepFour />
+      <h1>Order #{order._id}</h1>
       <div className="row top">
         <div className="col-2">
           <ul>
@@ -27,27 +31,40 @@ export default function OrderScreen(props) {
               <div className="card card-body">
                 <h2>Shipping</h2>
                 <p>
-                  <strong>Name:</strong> {cart.shippingAddress.fullName}
+                  <strong>Name:</strong> {order.shippingAddress.fullName}
                   <br />
-                  <strong>Address:</strong> {cart.shippingAddress.address},
-                  {cart.shippingAddress.city}, {cart.shippingAddress.postalCode}
-                  , {cart.shippingAddress.country}
+                  <strong>Address:</strong> {order.shippingAddress.address},
+                  {order.shippingAddress.city},{" "}
+                  {order.shippingAddress.postalCode},{" "}
+                  {order.shippingAddress.country}
                 </p>
+                {order.isDelivered ? (
+                  <Message variant="success">
+                    Delivered on {order.deliveredOn}
+                  </Message>
+                ) : (
+                  <Message variant="danger">Not delivered</Message>
+                )}
               </div>
             </li>
             <li>
               <div className="card card-body">
                 <h2>Payment</h2>
                 <p>
-                  <strong>Method:</strong> {cart.paymentMethod}
+                  <strong>Method:</strong> {order.paymentMethod}
                 </p>
+                {order.isPaid ? (
+                  <Message variant="success">Paid on {order.paidOn}</Message>
+                ) : (
+                  <Message variant="danger">Not paid</Message>
+                )}
               </div>
             </li>
             <li>
               <div className="card card-body">
                 <h2>Order Items</h2>
                 <ul>
-                  {cart.cartItems.map((item) => (
+                  {order.orderItems.map((item) => (
                     <li key={item.product}>
                       <div className="row">
                         <div>
@@ -82,19 +99,19 @@ export default function OrderScreen(props) {
               <li>
                 <div className="row">
                   <div>Items</div>
-                  <div>${cart.itemsPrice.toFixed(2)}</div>
+                  <div>${order.itemsPrice.toFixed(2)}</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Shipping</div>
-                  <div>${cart.shippingPrice.toFixed(2)}</div>
+                  <div>${order.shippingPrice.toFixed(2)}</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Tax</div>
-                  <div>${cart.taxPrice.toFixed(2)}</div>
+                  <div>${order.taxPrice.toFixed(2)}</div>
                 </div>
               </li>
               <li>
@@ -103,22 +120,10 @@ export default function OrderScreen(props) {
                     <strong>Order Total</strong>
                   </div>
                   <div>
-                    <strong>${cart.totalPrice.toFixed(2)}</strong>
+                    <strong>${order.totalPrice.toFixed(2)}</strong>
                   </div>
                 </div>
               </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={placeOrderHandler}
-                  className="primary block"
-                  disabled={cart.cartItems.length === 0}
-                >
-                  Place Order
-                </button>
-              </li>
-              {loading && <Loading />}
-              {error && <Message variant="danger">{error}</Message>}
             </ul>
           </div>
         </div>

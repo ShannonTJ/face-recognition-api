@@ -7,6 +7,9 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
 } from "../constants/userConstants";
 
 export const signin = (email, password) => async (dispatch) => {
@@ -55,4 +58,25 @@ export const signout = () => (dispatch) => {
   localStorage.removeItem("cartItems");
   localStorage.removeItem("shippingAddress");
   dispatch({ type: USER_SIGNOUT });
+};
+
+export const detailsUser = (userId) => async (dispatch, getState) => {
+  dispatch({ type: USER_DETAILS_REQUEST, payload: userId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = Axios.get(`/api/users/${id}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+  } catch (err) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
 };

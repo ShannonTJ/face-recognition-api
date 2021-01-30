@@ -6,6 +6,7 @@ import { detailsOrder, payOrder } from "../actions/orderActions";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
 import { PayPalButton } from "react-paypal-button-v2";
+import { ORDER_PAY_RESET } from "../constants/orderConstants";
 
 export default function OrderScreen(props) {
   const orderId = props.match.params.id;
@@ -13,7 +14,11 @@ export default function OrderScreen(props) {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
   const orderPay = useSelector((state) => state.orderPay);
-  const { error: errorPay, success: successPay } = orderPay;
+  const {
+    loading: loadingPay,
+    error: errorPay,
+    success: successPay,
+  } = orderPay;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,6 +34,7 @@ export default function OrderScreen(props) {
       document.body.appendChild(script);
     };
     if (!order || successPay || (order && order._id !== orderId)) {
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch(detailsOrder(orderId));
     } else {
       if (!order.isPaid) {
@@ -160,7 +166,8 @@ export default function OrderScreen(props) {
                     <>
                       {errorPay && (
                         <Message variant="danger">{errorPay}</Message>
-                      )}
+                      )}{" "}
+                      {loadingPay && <Loading />}
                       <PayPalButton
                         amount={order.totalPrice}
                         onSuccess={successPaymentHandler}

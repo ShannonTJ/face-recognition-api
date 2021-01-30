@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { detailsUser, updateUserProfile } from "../actions/userActions";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
 export default function ProfileScreen(props) {
   const [name, setName] = useState("");
@@ -14,10 +15,17 @@ export default function ProfileScreen(props) {
   const { userInfo } = userSignin;
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const {
+    success: successUpdate,
+    error: errorUpdate,
+    loading: loadingUpdate,
+  } = userUpdateProfile;
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!user) {
+      dispatch({ type: USER_UPDATE_PROFILE_RESET });
       dispatch(detailsUser(userInfo._id));
     } else {
       setName(user.name);
@@ -47,6 +55,11 @@ export default function ProfileScreen(props) {
           <Message variant="danger">{error}</Message>
         ) : (
           <>
+            {loadingUpdate && <Loading />}
+            {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
+            {successUpdate && (
+              <Message variant="success">Profile successfully updated</Message>
+            )}
             <div>
               <label htmlFor="name">Name</label>
               <input

@@ -1,41 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createOrder } from "../actions/orderActions";
+import { detailsOrder } from "../actions/orderActions";
 import CheckoutSteps from "../components/CheckoutSteps";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
-import { ORDER_CREATE_RESET } from "../constants/orderConstants";
+import { orderDetailsReducer } from "../reducers/orderReducers";
 
-export default function PlaceOrderScreen(props) {
-  const cart = useSelector((state) => state.cart);
-  if (!cart.paymentMethod) {
-    props.history.push("/payment");
-  }
-
-  const orderCreate = useSelector((state) => state.orderCreate);
-  const { loading, success, error, order } = orderCreate;
-
-  const toPrice = (num) => Number(num.toFixed(2));
-  cart.itemsPrice = toPrice(
-    cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
-  );
-  cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
-  cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
-
+export default function OrderScreen(props) {
+  const orderId = props.match.params.id;
+  const orderDetails = useSelector((state) => state.orderDetails);
+  const { order, loading, error } = orderDetails;
   const dispatch = useDispatch();
 
-  const placeOrderHandler = () => {
-    dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
-  };
-
   useEffect(() => {
-    if (success) {
-      props.history.push(`/order/${order._id}`);
-      dispatch({ type: ORDER_CREATE_RESET });
-    }
-  }, [success, props.history, order, dispatch]);
+    dispatch(detailsOrder(orderId));
+  }, [orderId, dispatch]);
 
   return (
     <div>

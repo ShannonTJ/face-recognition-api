@@ -1,10 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { detailsUser } from "../actions/userActions";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
 
 export default function ProfileScreen(props) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const userDetails = useSelector((state) => state.userDetails);
@@ -12,11 +17,22 @@ export default function ProfileScreen(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatchEvent(detailsUser(userInfo._id));
-  }, [dispatch, userInfo._id]);
+    if (!user) {
+      dispatchEvent(detailsUser(userInfo._id));
+    } else {
+      setName(user.name);
+      setEmail(user.email);
+    }
+  }, [dispatch, userInfo._id, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert("Your passwords do not match");
+    } else {
+      dispatch(updateUserProfile({ userId: user._id, name, email, password }));
+    }
   };
 
   return (
@@ -37,7 +53,8 @@ export default function ProfileScreen(props) {
                 id="name"
                 type="text"
                 placeholder="Enter name"
-                value={user.name}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div>
@@ -46,7 +63,8 @@ export default function ProfileScreen(props) {
                 id="email"
                 type="text"
                 placeholder="Enter email"
-                value={user.email}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
@@ -55,6 +73,7 @@ export default function ProfileScreen(props) {
                 id="password"
                 type="password"
                 placeholder="Enter password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div>
@@ -63,6 +82,7 @@ export default function ProfileScreen(props) {
                 id="confirmPassword"
                 type="password"
                 placeholder="Re-enter password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
             <div>

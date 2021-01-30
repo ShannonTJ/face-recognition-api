@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { detailsUser } from "../actions/userActions";
+import { detailsUser, updateUserProfile } from "../actions/userActions";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
 
@@ -18,7 +18,7 @@ export default function ProfileScreen(props) {
 
   useEffect(() => {
     if (!user) {
-      dispatchEvent(detailsUser(userInfo._id));
+      dispatch(detailsUser(userInfo._id));
     } else {
       setName(user.name);
       setEmail(user.email);

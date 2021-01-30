@@ -23,13 +23,13 @@ export const createOrder = (order) => async (dispatch, getState) => {
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     dispatch({ type: CART_EMPTY });
     localStorage.removeItem("cartItems");
-  } catch (err) {
+  } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
       payload:
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : err.message,
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
@@ -44,13 +44,11 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
-  } catch (err) {
-    dispatch({
-      type: ORDER_DETAILS_FAIL,
-      payload:
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : err.message,
-    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: ORDER_DETAILS_FAIL, payload: message });
   }
 };

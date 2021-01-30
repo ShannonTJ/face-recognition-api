@@ -26,7 +26,7 @@ export default function OrderScreen(props) {
       };
       document.body.appendChild(script);
     };
-    if (!order._id) {
+    if (!order) {
       dispatch(detailsOrder(orderId));
     } else {
       if (!order.isPaid) {
@@ -40,7 +40,7 @@ export default function OrderScreen(props) {
   }, [order, orderId, dispatch, sdkReady]);
 
   const successPaymentHandler = () => {
-    //dispatch
+    dispatch(payOrder(order, paymentResult));
   };
 
   return loading ? (

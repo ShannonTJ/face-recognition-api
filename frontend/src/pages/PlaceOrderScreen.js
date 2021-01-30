@@ -32,6 +32,7 @@ export default function PlaceOrderScreen(props) {
 
   useEffect(() => {
     if (success) {
+      console.log("id from placeorder screen" + order._id);
       props.history.push(`/order/${order._id}`);
       dispatch({ type: ORDER_CREATE_RESET });
     }

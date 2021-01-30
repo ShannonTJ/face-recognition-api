@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { detailsOrder } from "../actions/orderActions";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
+import { PayPalButton } from "react-paypal-button-v2";
 
 export default function OrderScreen(props) {
   const orderId = props.match.params.id;
@@ -37,6 +38,10 @@ export default function OrderScreen(props) {
       }
     }
   }, [order, orderId, dispatch, sdkReady]);
+
+  const successPaymentHandler = () => {
+    //dispatch
+  };
 
   return loading ? (
     <Loading />
@@ -145,6 +150,18 @@ export default function OrderScreen(props) {
                   </div>
                 </div>
               </li>
+              {!order.isPaid && (
+                <li>
+                  {!sdkReady ? (
+                    <Loading />
+                  ) : (
+                    <PayPalButton
+                      amount={order.totalPrice}
+                      onSuccess={successPaymentHandler}
+                    />
+                  )}
+                </li>
+              )}
             </ul>
           </div>
         </div>

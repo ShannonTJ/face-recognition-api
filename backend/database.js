@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const connection =
-  "mongodb+srv://AmazonaAdmin:1234@mongodb.net:27017/Amazona?retryWrites=true&w=majority";
+  "mongodb+srv://AmazonaAdmin:1234@amazona-shard-00-01.gcsrx.mongodb.net:27017/Amazona?retryWrites=true&w=majority";
 mongoose
   .connect(connection, {
     useNewUrlParser: true,

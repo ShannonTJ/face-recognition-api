@@ -76,7 +76,7 @@ function App() {
           <Route path="/payment" component={PaymentMethodScreen} />
           <Route path="/placeorder" component={PlaceOrderScreen} />
           <Route path="/order/:id" component={OrderScreen} />
-          <Route path="/orderhistory" component={OrderHistoryScreen} />
+          <PrivateRoute path="/orderhistory" component={OrderHistoryScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} />
           <Route path="/" component={HomeScreen} exact />
         </main>

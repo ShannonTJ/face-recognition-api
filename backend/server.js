@@ -12,14 +12,19 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const uri = process.env.MONGODB_URL;
+const backupUri = "mongodb://127.0.0.1:27017/amazona";
+
 mongoose
-  .connect(process.env.MONGODB_URL || "mongodb://localhost/amazona", {
+  .connect(uri || backupUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
   .then(() => {
-    console.log("");
+    console.log("db connected");
+    console.log(uri);
+    console.log(backupUri);
   })
   .catch((err) => {
     console.log(err);

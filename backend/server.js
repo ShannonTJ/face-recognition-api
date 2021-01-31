@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const uri = process.env.MONGODB_URL;
+const uri = process.env.MONGODB_URI;
 const backupUri = "mongodb://127.0.0.1:27017/amazona";
 
 mongoose

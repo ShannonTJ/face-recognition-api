@@ -74,7 +74,7 @@ export default function OrderScreen(props) {
                 </p>
                 {order.isDelivered ? (
                   <Message variant="success">
-                    Delivered on {order.deliveredOn}
+                    Delivered on {order.deliveredOn.substring(0, 10)}
                   </Message>
                 ) : (
                   <Message variant="danger">Not delivered</Message>
@@ -88,7 +88,9 @@ export default function OrderScreen(props) {
                   <strong>Method:</strong> {order.paymentMethod}
                 </p>
                 {order.isPaid ? (
-                  <Message variant="success">Paid on {order.paidOn}</Message>
+                  <Message variant="success">
+                    Paid on {order.paidOn.substring(0, 10)}
+                  </Message>
                 ) : (
                   <Message variant="danger">Not paid</Message>
                 )}

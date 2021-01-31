@@ -58,7 +58,7 @@ export default function ProfileScreen(props) {
             {loadingUpdate && <Loading />}
             {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
             {successUpdate && (
-              <Message variant="success">Profile successfully updated</Message>
+              <Message variant="success">Profile updated successfully</Message>
             )}
             <div>
               <label htmlFor="name">Name</label>
@@ -81,7 +81,7 @@ export default function ProfileScreen(props) {
               />
             </div>
             <div>
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">New password</label>
               <input
                 id="password"
                 type="password"
@@ -90,7 +90,7 @@ export default function ProfileScreen(props) {
               />
             </div>
             <div>
-              <label htmlFor="confirmPassword">Confirm password</label>
+              <label htmlFor="confirmPassword">Confirm new password</label>
               <input
                 id="confirmPassword"
                 type="password"
